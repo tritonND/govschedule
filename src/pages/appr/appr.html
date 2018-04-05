@@ -1,0 +1,77 @@
+<!--
+  Generated template for the ApprPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+    <ion-navbar color="secondary">
+      <ion-title align='center'>
+        Approved Schedule
+      </ion-title>
+    </ion-navbar>
+  </ion-header> 
+  
+
+
+<ion-content padding>
+
+    <div class="schedules">
+        <ion-card class="card"  *ngFor="let res of schedule"  >
+          <div *ngIf="compareStatus(res.STATUS); then TrueBlock; else FalseBlock">   </div>
+      
+          <ng-template #TrueBlock>
+             <div style="background-color:#BEFBBE">
+                <ion-card-header class="headers">
+                    SCHEDULE TIME:  {{ res.SCHEDULETIME }}
+                      <hr>
+                  </ion-card-header>
+                <ion-card-content class="contents" style="font-weight: 600">
+                    <ion-badge style="background-color:blue"> {{ res.STATUS }}  </ion-badge> 
+              
+                    <p> {{ res.DESCRIPTION }} </p>
+                    <hr> 
+                    <!-- <span> {{ res.STATUS }} </span> -->
+                  <!-- <div align="right"> <button color="danger" ion-button (click) ="dropSchedule(res.ID)">Reject</button> </div> -->
+
+                   <div align="center">
+             
+              <span> Date: {{res.SCHEDULEDATE}} </span>
+               <button color="danger" ion-button (click) ="dropSchedule(res.ID)">Reject</button> 
+              </div>
+                  </ion-card-content>
+             </div>
+           </ng-template>
+      
+           <ng-template #FalseBlock>
+              <div style="background-color:#F55444 ">
+                  <ion-card-header class="headers1">
+                      SCHEDULE TIME:  {{ res.SCHEDULETIME }}
+                         <hr>
+                     </ion-card-header>
+                   <ion-card-content class="contents"  style="font-weight: 600" >
+                       <ion-badge style="background-color:blue"> {{ res.STATUS }}  </ion-badge> 
+                 
+                       <p style="color:#ffffff; font-weight:500"> {{ res.DESCRIPTION }} </p>
+                       <hr> 
+                       <!-- <span> {{ res.STATUS }} </span> -->
+                     <div align="center"> 
+                        <span> Date: {{res.SCHEDULEDATE}} </span> 
+                      <button color="secondary2" ion-button (click) ="appSchedule(res.ID)">Approve</button> </div>
+                     </ion-card-content>
+              </div>
+           </ng-template>   
+      
+        </ion-card>
+        
+      </div>
+        
+        
+      </ion-content>
+      
+      <ion-footer>
+        <ion-toolbar class="footers">
+          <ion-title align="center" style="font-weight:100">Powered by Edo ICTA</ion-title>
+        </ion-toolbar>
+      </ion-footer>
+      

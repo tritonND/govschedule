@@ -1,14 +1,136 @@
 <ion-header>
-  <ion-navbar>
-    <ion-title>
-      Ionic Blank
+  <ion-navbar color="secondary"> 
+    <ion-title align='center'>
+      Governor's Schedule
     </ion-title>
+
+    <ion-buttons end>
+        <button style="border-color:aliceblue" ion-button (click)="pushPage()"> View  &nbsp;  &nbsp;
+          <ion-icon name="ios-calendar-outline"> </ion-icon>
+        </button>
+      </ion-buttons>
   </ion-navbar>
-</ion-header>
+</ion-header> 
 
 <ion-content padding>
-  The world is your oyster.
-  <p>
-    If you get lost, the <a href="http://ionicframework.com/docs/v2">docs</a> will be your guide.
-  </p>
+  
+  <!-- <div >
+    <ion-grid>
+      <ion-row>
+        <ion-col> </ion-col>
+  
+        <ion-col col-10>
+          <ion-item>
+            <ion-label>Choose Date</ion-label>
+            <ion-datetime displayFormat="DD MMMM YYYY" min="2018"  max="2018" pickerFormat="DD MMMM YYYY" [(ngModel)]="myDate"></ion-datetime>
+          </ion-item> 
+  
+          <button ion-button (click) ="getDateInp()">Get Schedule</button> -->
+         <!--  <button ion-button (click) ="checkDate()">Check Schedule</button>
+        </ion-col>
+  
+        <ion-col>   </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div> -->
+
+  <div ion-fixed class="dates"> 
+    <ion-item>
+      <ion-label>Choose Date</ion-label>
+      <ion-datetime displayFormat="DD MMMM YYYY" min="2018"  max="2020" pickerFormat="DDDD DD MMMM YYYY" [(ngModel)]="myDate"></ion-datetime>
+    </ion-item> 
+  
+    <!-- <button ion-button (click) ="getDateInp()">Get Schedule</button> -->
+    <div align="center">  
+      <button color="secondary" ion-button (click) ="checkSchedule(myDate)">Check Schedule</button>  
+    </div>
+
+     
+  </div>
+
+
+
+<div class="schedules">
+  <ion-card class="card"  *ngFor="let res of schedule"  >
+    <div *ngIf="compareStatus(res.STATUS); then TrueBlock;">   </div>
+
+    <ng-template #TrueBlock>
+       <div style="background-color:#BEFBBE">
+          <ion-card-header class="headers">
+              SCHEDULE TIME:  {{ res.SCHEDULETIME }}
+                <hr>
+            </ion-card-header>
+          <ion-card-content class="contents" style="font-weight: bold">
+              <ion-badge style="background-color:rgb(20, 128, 6)"> {{ res.STATUS }}  </ion-badge> 
+        
+              <p> {{ res.DESCRIPTION }} </p>
+              <hr> 
+               
+            <div align="center">
+                
+              <script> 
+               var d = new Date.parse(res.SCHEDULEDATE)  ;
+               console.log(d);
+
+               console.log("i got to this place");
+              </script>
+              <span> Date: {{res.SCHEDULEDATE}} </span>
+               <button color="danger" ion-button (click) ="dropSchedule(res.ID)">Reject</button> 
+              </div>
+            </ion-card-content>
+       </div>
+     </ng-template>
+
+     <div *ngIf="compareStatus2(res.STATUS); then FalseBlock">   </div>
+     <ng-template #FalseBlock>
+        <div style="background-color:rgb(248, 245, 201) "> 
+            <ion-card-header class="headers1">
+                SCHEDULE TIME:  {{ res.SCHEDULETIME }}
+                   <hr>
+               </ion-card-header>
+             <ion-card-content class="contents"  style="font-weight: bold" >
+                 <ion-badge style="background-color:rgb(121, 134, 5)"> {{ res.STATUS }}  </ion-badge> 
+           
+                 <p style="color:#000000; font-weight:500"> {{ res.DESCRIPTION }} </p>
+                 <hr> 
+                 <!-- <span> {{ res.STATUS }} </span> -->
+               <div align="center"> 
+                  <span> Date: {{res.SCHEDULEDATE}} </span>
+                 <button color="secondary2" ion-button (click) ="appSchedule(res.ID)">Approve</button> </div>
+               </ion-card-content>
+        </div>
+     </ng-template>   
+
+
+     <div *ngIf="compareStatus3(res.STATUS); then RejectBlock">   </div>
+     <ng-template #RejectBlock>
+        <div style="background-color:rgb(241, 214, 212) "> 
+            <ion-card-header class="headers1">
+                SCHEDULE TIME:  {{ res.SCHEDULETIME }}
+                   <hr>
+               </ion-card-header>
+             <ion-card-content class="contents"  style="font-weight: bold" >
+                 <ion-badge style="background-color:rgb(185, 11, 11)"> {{ res.STATUS }}  </ion-badge> 
+           
+                 <p style="color:#000000; font-weight:500"> {{ res.DESCRIPTION }} </p>
+                 <hr> 
+                 <!-- <span> {{ res.STATUS }} </span> -->
+               <div align="center"> 
+                  <span> Date: {{res.SCHEDULEDATE}} </span> 
+                <button color="secondary2" ion-button (click) ="appSchedule(res.ID)">Approve</button> </div>
+               </ion-card-content>
+        </div>
+     </ng-template>   
+
+  </ion-card>
+
+</div>
+
+  
 </ion-content>
+
+<ion-footer>
+  <ion-toolbar class="footers">
+    <ion-title align="center" style="font-weight:100">Powered by Edo ICTA</ion-title>
+  </ion-toolbar>
+</ion-footer>
